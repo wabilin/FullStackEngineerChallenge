@@ -6,23 +6,25 @@ import prisma from 'utils/prismaClient'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const currentUser = await getCurrentUser(req, res)
-  const { query: { id }, method } = req
+  const { query, method } = req
 
-  if (typeof id !== 'string') {
-    throw new Error('Unexpected type')
+  const id = Number(query.id)
+  if (!id) {
+      res.status(400).end()
+      return;
   }
 
   switch(method) {
     case 'GET':
       const review = await prisma.review.findFirst({
-        where: { id: parseInt(id, 10) },
+        where: { id },
         include: {
           user: {
             select: {
               id: true,
               username: true,
             }
-          }
+          },
         }
       })
 
@@ -36,7 +38,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
       const { body } = req.body
       const updated = await prisma.review.update({
-        where: { id: parseInt(id, 10) },
+        where: { id },
         data: { body }
       })
       res.status(200).json(updated)

@@ -37,6 +37,7 @@ function ReviewList({ id }: ReviewListProps) {
   const links = data && data.map(({id}) => (
     <li style={{margin: 12}}>
       #{id}
+      <LinkButton href={`/reviews/${id}`} label='View' />
       <LinkButton href={`/reviews/${id}/edit`} label='Edit' />
       <LinkButton href={`/reviews/${id}/assign`} label='Assign' />
     </li>

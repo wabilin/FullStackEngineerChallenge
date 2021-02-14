@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { ADMIN, EMPLOYEE } from 'utils/roles'
+import { ADMIN } from 'utils/roles'
 import getCurrentUser from 'utils/getCurrentUser'
 import prisma from 'utils/prismaClient'
 
@@ -8,8 +8,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const currentUser = await getCurrentUser(req, res)
   switch(req.method) {
     case 'GET':
-      throw new Error('Not yet')
-      break;
+      if (currentUser.role !== ADMIN) {
+        res.status(403).end('Not allow.')
+      }
+      const reviewId = Number(req.query.reviewId)
+      if (!reviewId) {
+        res.status(400).end()
+        return
+      }
+      const feedbacks = await prisma.feedback.findMany({
+        where: { reviewId },
+        include: {
+          user: {
+            select: { username: true }
+          }
+        }
+      })
+      res.status(200).json(feedbacks)
+      break
     case 'POST':
       const ids = {
         userId: currentUser.id,

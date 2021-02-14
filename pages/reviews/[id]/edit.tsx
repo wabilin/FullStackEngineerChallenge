@@ -22,7 +22,7 @@ function EditReview({ body, id }: EditReviewProps) {
 
 export default function EditReviewPage() {
   const { query } = useRouter()
-  const { id } = query
+  const id = Number(query.id)
   const { data } = useSWR(`/api/reviews/${id}`)
 
   return (
