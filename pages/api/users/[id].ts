@@ -13,7 +13,8 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
   }
 
   if (typeof id !== 'string') {
-    throw new Error('Unexpected type')
+    res.status(404).end()
+    return
   }
 
   switch (method) {

@@ -7,7 +7,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { username, password } = req.body
   if (typeof username !== 'string' || typeof password !== 'string') {
-    throw new Error('Invalid params type')
+    res.status(401).json({ success: false })
+    return
   }
 
   const user = await prisma.user.findFirst({
