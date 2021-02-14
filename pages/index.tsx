@@ -1,9 +1,16 @@
-import { useEffect } from 'react'
-import useSWR from 'swr'
 import axios from 'axios'
-import styles from '../styles/Home.module.css'
-import Layout from '../components/layout'
+import styles from 'styles/Home.module.css'
+import Layout from 'components/layout'
+import Link from 'components/LinkButton'
 import useCurrentUser from 'hooks/useCurrentUser'
+
+function AdminIndex() {
+  return (
+    <>
+      <Link href='users/new' label='Create User' />
+    </>
+  )
+}
 
 export default function Home() {
   const user = useCurrentUser()
@@ -22,7 +29,7 @@ export default function Home() {
         Review System
       </h1>
       {
-        user?.role === 'admin' && 'ADMIN VIEW'
+        user?.role === 'admin' && <AdminIndex />
       }
       <button onClick={onClick}>
         Create admin

@@ -1,17 +1,8 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from './NavBar.module.css'
+import LinkButton from 'components/LinkButton'
+import Button from 'components/Button'
 import {logout} from 'apis'
-
-interface LinkProps {
-  label: string;
-  href: string;
-}
-const LinkButton = ({href, label}: LinkProps) => (
-  <Link href={href} passHref>
-    <a className={styles.link}>{label}</a>
-  </Link>
-)
 
 const NavBar = () => {
   const router = useRouter()
@@ -20,13 +11,13 @@ const NavBar = () => {
     <nav className={styles.nav}>
       <LinkButton href="/" label="Home" />
       <LinkButton href="/login" label="Login" />
-      <button type="button" className={styles.link} onClick={async () => {
+      <Button type="button"  onClick={async () => {
         await logout()
         alert('Logged out.')
-        router.push('/')
+        router.push('/login')
       }}>
         Logout
-      </button>
+      </Button>
     </nav>
   )
 }
