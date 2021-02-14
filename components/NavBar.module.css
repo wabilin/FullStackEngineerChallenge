@@ -1,0 +1,19 @@
+.nav {
+    display: flex;
+    position: absolute;
+    top: 0;
+}
+
+.link {
+    font-size: medium;
+    background-color: lightgray;
+    padding: 2px;
+    margin: 4px;
+    border: white solid 1px;
+    cursor: pointer;
+}
+
+.link:hover {
+    background-color: white;
+    border-color: gray;
+}
