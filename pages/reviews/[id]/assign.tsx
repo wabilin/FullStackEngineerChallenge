@@ -40,9 +40,9 @@ export default function AssignReviewPage() {
 
   return (
     <Layout>
-      <h1>Edit Review</h1>
+      <h1>Assign User to feedback at Review#{id}</h1>
       {!data && 'loading...'}
-      {data && <AssignReview users={data} id={id} />}
+      {data && <AssignReview users={data} id={Number(id)} />}
     </Layout>
   )
 }

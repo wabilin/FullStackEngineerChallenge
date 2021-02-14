@@ -15,7 +15,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch(method) {
     case 'GET':
       const review = await prisma.review.findFirst({
-        where: { id: parseInt(id, 10) }
+        where: { id: parseInt(id, 10) },
+        include: {
+          user: {
+            select: {
+              id: true,
+              username: true,
+            }
+          }
+        }
       })
 
       res.status(200).json(review)
