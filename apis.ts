@@ -21,3 +21,7 @@ export function createUser(username: string, password: string) {
 export function deleteUser(id: number) {
   return axios.delete(`/api/users/${id}`)
 }
+
+export function createReview(userId: number, body: string) {
+  return axios.post('/api/reviews', { userId, body })
+}

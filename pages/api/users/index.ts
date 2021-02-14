@@ -21,10 +21,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const currentUser = await getCurrentUser(req, res)
   switch(req.method) {
     case 'GET':
-      const users = await prisma.user.findMany({ select: {
-        id: true,
-        username: true,
-      }})
+      const users = await prisma.user.findMany({
+        select: { id: true, username: true },
+        where: { role: EMPLOYEE }
+      })
       res.status(200).json(users)
       break;
     case 'POST':

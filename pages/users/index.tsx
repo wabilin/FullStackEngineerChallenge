@@ -1,21 +1,22 @@
 import useSWR from 'swr'
 import Layout from 'components/layout'
 import Button from 'components/Button'
+import LinkButton from 'components/LinkButton'
 import { deleteUser } from 'apis'
 
 interface TableProps {
   users: any[]
 }
 function UsersTable({ users }: TableProps) {
-  const trs = users.map(user => (
-    <tr key={user.id}>
-      <td>{user.username}</td>
+  const trs = users.map(({id, username}) => (
+    <tr key={id}>
+      <td>{username}</td>
       <td>
         <Button onClick={async() => {
           try {
-            await deleteUser(user.id)
+            await deleteUser(id)
           } catch {
-            alert('failed')
+            alert('Failed')
             return
           }
           alert('Deleted')
@@ -23,7 +24,9 @@ function UsersTable({ users }: TableProps) {
           Delete
         </Button>
       </td>
-      <td>Add Review</td>
+      <td>
+        <LinkButton label="Add Review" href={`/users/${id}`} />
+      </td>
     </tr>
   ))
 

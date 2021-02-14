@@ -17,6 +17,13 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
   }
 
   switch (method) {
+    case 'GET':
+      const user = await prisma.user.findFirst({
+        select: { id: true, username: true },
+        where: { id: parseInt(id, 10) }
+      })
+      res.status(200).json(user)
+      break
     case 'DELETE':
       await prisma.user.delete({
         where: { id: parseInt(id, 10) }
