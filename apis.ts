@@ -28,3 +28,7 @@ export function createReview(userId: number, body: string) {
 export function updateReview(id: number, body: string) {
   return axios.put(`/api/reviews/${id}`, { body })
 }
+
+export function assignFeedback(reviewId: number, userId: number) {
+  return axios.post('/api/feedbackRequests', { userId, reviewId })
+}

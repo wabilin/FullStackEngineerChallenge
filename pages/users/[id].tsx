@@ -38,7 +38,7 @@ function ReviewList({ id }: ReviewListProps) {
     <li style={{margin: 12}}>
       #{id}
       <LinkButton href={`/reviews/${id}/edit`} label='Edit' />
-      <LinkButton href={`/reviews/${id}/edit`} label='Assign' />
+      <LinkButton href={`/reviews/${id}/assign`} label='Assign' />
     </li>
   ))
 
