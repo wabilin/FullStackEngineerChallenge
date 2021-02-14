@@ -1,13 +1,20 @@
-import {useState} from 'react'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import Layout from 'components/layout'
-import {login} from 'apis'
+import { login } from 'apis'
 
 export default function UserIndex() {
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const error = router.query.error
+
+
   const onLoginClick = async () => {
     try {
       await login(username, password)
+      router.push('/')
     } catch {
       alert('Login Failed')
     }
@@ -16,6 +23,7 @@ export default function UserIndex() {
   return (
     <Layout>
       <h1>Login</h1>
+      {error && <p style={{color: 'red'}}>Please login first.</p>}
       <div>
         <label>
           Username

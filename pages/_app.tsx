@@ -1,12 +1,12 @@
 import { SWRConfig } from 'swr'
+import axios from 'axios'
 import '../styles/globals.css'
 
-type Fetch = typeof fetch
-const fetcher = (...args: Parameters<Fetch>) => fetch(...args).then(res => res.json())
+const fetcher = (url: string) => axios.get(url).then(res => res.data)
 
 function MyApp({ Component, pageProps }) {
   return (
-    <SWRConfig value={{ fetcher }} >
+    <SWRConfig value={{ fetcher, shouldRetryOnError: false  }} >
       <Component {...pageProps} />
     </SWRConfig>
   )

@@ -10,30 +10,29 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     throw new Error('Invalid params type')
   }
 
-  try {
-    const user = await prisma.user.findFirst({
-      select: {
-        id: true,
-        passwordHash: true,
-      },
-      where: {
-        username,
-      }
-    })
-
-    const passed = await bcrypt.compare(password, user.passwordHash)
-    if (passed) {
-      const cookies = new Cookies(req, res)
-      cookies.set('userId', user.id.toString(), {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-      })
-      res.status(200).json({ success: true })
-    } else {
-      res.status(401).json({ success: false })
+  const user = await prisma.user.findFirst({
+    select: {
+      id: true,
+      passwordHash: true,
+    },
+    where: {
+      username,
     }
-  } catch {
+  })
+
+  if (!user) {
+    res.status(401).json({ success: false })
+    return
+  }
+
+  const passed = await bcrypt.compare(password, user.passwordHash)
+  if (passed) {
+    const cookies = new Cookies(req, res)
+    cookies.set('userId', user.id.toString(), {
+      httpOnly: true,
+    })
+    res.status(200).json({ success: true })
+  } else {
     res.status(401).json({ success: false })
   }
 }

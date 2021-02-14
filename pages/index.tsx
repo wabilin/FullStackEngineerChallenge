@@ -3,12 +3,10 @@ import useSWR from 'swr'
 import axios from 'axios'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
+import useCurrentUser from 'hooks/useCurrentUser'
 
 export default function Home() {
-  const { data } = useSWR('/api/users')
-  useEffect(() => {
-    console.log(data)
-  }, [data])
+  const user = useCurrentUser()
 
   const onClick = () => {
     axios.post('/api/users')
@@ -23,6 +21,9 @@ export default function Home() {
       <h1 className={styles.title}>
         Review System
       </h1>
+      {
+        user?.role === 'admin' && 'ADMIN VIEW'
+      }
       <button onClick={onClick}>
         Create admin
       </button>
