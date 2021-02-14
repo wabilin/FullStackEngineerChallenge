@@ -1,13 +1,15 @@
 import useSWR from 'swr'
 import Layout from 'components/layout'
-import Button from 'components/Button'
 import LinkButton from 'components/LinkButton'
-import { deleteUser } from 'apis'
 
 interface RequestListProps {
   requests: any[]
 }
 function RequestList({ requests }: RequestListProps) {
+  if (requests.length === 0) {
+    return (<p>No feedback required</p>)
+  }
+
   const items = requests.map(({ userId, reviewId }) => (
     <li key={`${userId}-${reviewId}`}>
       <LinkButton href={`/reviews/${reviewId}/feedback`} label={`#${reviewId}`}/>

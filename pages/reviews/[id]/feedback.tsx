@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Layout from 'components/layout'
 import Button from 'components/Button'
-import { updateReview } from 'apis'
+import { createFeedback } from 'apis'
 import { useState } from 'react'
 
 interface CreateFeedbackProps {
@@ -11,7 +11,9 @@ interface CreateFeedbackProps {
   username: string
 }
 function CreateFeedback({ body, reviewId, username }: CreateFeedbackProps) {
+  const router = useRouter()
   const [feedback, setFeedback] = useState('')
+  const [sending, setSending] = useState(false)
 
   return (
     <>
@@ -27,8 +29,18 @@ function CreateFeedback({ body, reviewId, username }: CreateFeedbackProps) {
       <h3>
         Your Feedback
       </h3>
-      <form onSubmit={(e) => {
+      <form onSubmit={async (e) => {
         e.preventDefault()
+        setSending(true)
+        try {
+          await createFeedback(reviewId, feedback)
+        } catch {
+          alert('Failed')
+          setSending(false)
+          return
+        }
+          alert('Feedback submitted')
+        router.push('/')
       }}>
         <textarea onChange={(e) => {
           setFeedback(e.target.value)
@@ -36,7 +48,7 @@ function CreateFeedback({ body, reviewId, username }: CreateFeedbackProps) {
           {feedback}
         </textarea>
         <div>
-          <Button>Submit</Button>
+          <Button disabled={sending}>Submit</Button>
         </div>
       </form>
     </>

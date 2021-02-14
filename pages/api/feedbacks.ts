@@ -11,17 +11,34 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error('Not yet')
       break;
     case 'POST':
-      req
-      const feedbackRequest = await prisma.feedbackRequest.findFirst({
-        where: {
-          userId: currentUser.id,
-          reviewId: req.body.reviewId,
-        }
-      })
+      const ids = {
+        userId: currentUser.id,
+        reviewId: req.body.reviewId,
+      }
+      const feedbackRequest = await prisma.feedbackRequest.findFirst({ where: ids })
       if (!feedbackRequest || feedbackRequest.finished) {
         res.status(403).end('Not allow.')
         return
       }
+
+      await prisma.$transaction([
+        prisma.feedback.create({
+          data: {
+            ...ids,
+            body: req.body.feedback,
+          }
+        }),
+        prisma.feedbackRequest.update({
+          where: {
+            userId_reviewId: ids,
+          },
+          data: {
+            finished: true,
+          }
+        }),
+      ])
+
+      res.status(201).end()
 
       break;
     default:
