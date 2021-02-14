@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import getCurrentUser from 'utils/getCurrentUser'
-import {ADMIN} from 'utils/roles'
+import { ADMIN } from 'utils/roles'
 import prisma from 'utils/prismaClient'
 
 export default async function userHandler(req: NextApiRequest, res: NextApiResponse) {

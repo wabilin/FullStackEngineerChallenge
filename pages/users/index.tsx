@@ -25,7 +25,7 @@ function UsersTable({ users }: TableProps) {
         </Button>
       </td>
       <td>
-        <LinkButton label="Add Review" href={`/users/${id}`} />
+        <LinkButton label="Review" href={`/users/${id}`} />
       </td>
     </tr>
   ))

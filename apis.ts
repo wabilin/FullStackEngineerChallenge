@@ -25,3 +25,6 @@ export function deleteUser(id: number) {
 export function createReview(userId: number, body: string) {
   return axios.post('/api/reviews', { userId, body })
 }
+export function updateReview(id: number, body: string) {
+  return axios.put(`/api/reviews/${id}`, { body })
+}
