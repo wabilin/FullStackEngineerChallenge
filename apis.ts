@@ -7,6 +7,14 @@ export function login(username: string, password: string) {
   })
 }
 
+
 export function logout() {
   return axios.post('/api/logout')
+}
+
+export function createUser(username: string, password: string) {
+  return axios.post('/api/users', {
+    username,
+    password,
+  })
 }
