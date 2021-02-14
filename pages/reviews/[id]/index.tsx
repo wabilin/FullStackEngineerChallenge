@@ -1,18 +1,17 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Layout from 'components/layout'
-import { updateReview } from 'apis'
 
 interface ReviewProps {
   body: string
   feedbacks: any[]
 }
 function Review({ body, feedbacks }: ReviewProps) {
-  const feedbackItems = feedbacks.map(x => (
-    <div key={x.id}>
-      <h3>Feedback #{x.id}</h3>
-      <p>{x.body}</p>
-      <p>By: {x.user.username}</p>
+  const feedbackItems = feedbacks.map(feedback => (
+    <div key={feedback.id}>
+      <h3>Feedback #{feedback.id}</h3>
+      <p>{feedback.body}</p>
+      <p>By: {feedback.user.username}</p>
     </div>
   ))
   return (

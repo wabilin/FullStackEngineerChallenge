@@ -48,7 +48,7 @@ function CreateFeedback({ body, reviewId, username }: CreateFeedbackProps) {
           {feedback}
         </textarea>
         <div>
-          <Button disabled={sending}>Submit</Button>
+          <Button type="submit" disabled={sending}>Submit</Button>
         </div>
       </form>
     </>

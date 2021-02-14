@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import useSWR from 'swr'
 import Layout from 'components/layout'
 import { createReview } from 'apis'
-import Button from 'components/Button'
 import LinkButton from 'components/LinkButton'
 import ReviewForm from 'components/ReviewForm'
 
