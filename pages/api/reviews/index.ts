@@ -7,9 +7,13 @@ import prisma from 'utils/prismaClient'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const currentUser = await getCurrentUser(req, res)
 
-  const { userId } = req.body
   switch(req.method) {
     case 'GET':
+      const userId = Number(req.query.userId)
+      if (!userId) {
+        res.status(404).end()
+        return
+      }
       const reviews = await prisma.review.findMany({
         where: { userId }
       })
@@ -24,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       const { body } = req.body
       const { id } = await prisma.review.create({
-        data: { userId, body }
+        data: { userId: req.body.userId, body }
       })
 
       res.status(201).json({ id })

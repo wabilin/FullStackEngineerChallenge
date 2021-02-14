@@ -17,6 +17,7 @@ export default function UserIndex() {
           onSubmit={async (username, password) => {
             try {
               await login(username, password)
+              alert('Login Success')
               router.push('/')
             } catch {
               alert('Login Failed')
