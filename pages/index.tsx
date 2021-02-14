@@ -8,6 +8,7 @@ function AdminIndex() {
   return (
     <>
       <Link href='users/new' label='Create User' />
+      <Link href='users' label='User List' />
     </>
   )
 }
