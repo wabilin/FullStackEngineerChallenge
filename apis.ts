@@ -7,7 +7,6 @@ export function login(username: string, password: string) {
   })
 }
 
-
 export function logout() {
   return axios.post('/api/logout')
 }
@@ -17,4 +16,8 @@ export function createUser(username: string, password: string) {
     username,
     password,
   })
+}
+
+export function deleteUser(id: number) {
+  return axios.delete(`/api/users/${id}`)
 }

@@ -1,5 +1,7 @@
 import useSWR from 'swr'
 import Layout from 'components/layout'
+import Button from 'components/Button'
+import { deleteUser } from 'apis'
 
 interface TableProps {
   users: any[]
@@ -8,7 +10,19 @@ function UsersTable({ users }: TableProps) {
   const trs = users.map(user => (
     <tr key={user.id}>
       <td>{user.username}</td>
-      <td>Delete</td>
+      <td>
+        <Button onClick={async() => {
+          try {
+            await deleteUser(user.id)
+          } catch {
+            alert('failed')
+            return
+          }
+          alert('Deleted')
+        }}>
+          Delete
+        </Button>
+      </td>
       <td>Add Review</td>
     </tr>
   ))

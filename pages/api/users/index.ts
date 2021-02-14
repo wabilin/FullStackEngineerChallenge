@@ -1,11 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
 import { ADMIN, EMPLOYEE } from 'utils/roles'
 import getCurrentUser from 'utils/getCurrentUser'
-
-const prisma = new PrismaClient()
+import prisma from 'utils/prismaClient'
 
 const encrypt = (password: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -31,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case 'POST':
       if (currentUser?.role !== ADMIN) {
-        res.status(403).json({ message: 'Not allow.'})
+        res.status(403).end('Not allow.')
         return
       }
 
@@ -55,6 +53,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(201).json({ id })
       break;
     default:
-      res.status(405).json({ message: 'Invalid' })
+      res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
